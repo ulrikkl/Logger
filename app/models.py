@@ -1,8 +1,10 @@
 from app import db, login
 from argon2 import PasswordHasher
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
+from flask_user import UserMixin
+from hashlib import md5
 
-class User(UserMixin, db.Model):
+class User(db.Model, UserMixin):
     __tablename__= 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -18,6 +20,11 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return PasswordHasher().verify(self.password_hash, password)
+
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
 
 @login.user_loader
 def load_user(id):
@@ -38,3 +45,4 @@ class UserRoles(db.Model):
         id = db.Column(db.Integer(), primary_key=True)
         user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
         role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
+
