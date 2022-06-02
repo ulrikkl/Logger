@@ -1,23 +1,4 @@
-2022-05-28 17:50:01,137 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 17:51:22,064 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:02:40,652 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:13:35,736 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:18:00,158 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:19:30,311 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:21:54,162 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:23:22,956 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:27:10,063 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:28:39,835 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:35:29,553 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:38:54,328 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:45:37,464 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 18:47:17,468 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:28]
-2022-05-28 19:00:48,166 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:31]
-2022-05-28 19:13:33,349 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:31]
-2022-05-28 19:20:15,162 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:31]
-2022-05-29 00:31:28,714 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:31]
-2022-05-29 01:46:39,059 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:31]
-2022-05-29 01:46:46,029 ERROR: Exception on /login [GET] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+2022-06-02 02:11:51,870 ERROR: Exception on /login [GET] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
 Traceback (most recent call last):
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
     response = self.full_dispatch_request()
@@ -27,8 +8,8 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/ulrik/Git/Logger/app/routes.py", line 41, in login
-    return render_template('login.html', title='Sign In', testform=testform)
+  File "/home/ulrik/Git/Logger/app/auth/routes.py", line 24, in login
+    return render_template('auth/login.html', title='Sign In', form=form)
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/templating.py", line 148, in render_template
     return _render(
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
@@ -37,16 +18,29 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/jinja2/environment.py", line 936, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/home/ulrik/Git/Logger/app/templates/login.html", line 1, in top-level template code
-    {% extends 'base.html' %}
-  File "/home/ulrik/Git/Logger/app/templates/base.html", line 31, in top-level template code
-    {% block content %}{% endblock %}
-  File "/home/ulrik/Git/Logger/app/templates/login.html", line 6, in block 'content'
-    {{ form.hidden_tag() }}
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/jinja2/environment.py", line 485, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'form' is undefined
-2022-05-29 01:46:48,910 ERROR: Exception on /login [GET] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+  File "/home/ulrik/Git/Logger/app/templates/auth/login.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "/home/ulrik/Git/Logger/app/templates/base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block 'html'
+    {% block body -%}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 21, in block 'body'
+    {% block navbar %}
+  File "/home/ulrik/Git/Logger/app/templates/base.html", line 17, in block 'navbar'
+    <a class="navbar-brand" href="{{ url_for('index') }}">Logger</a>
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/helpers.py", line 336, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/helpers.py", line 323, in url_for
+    rv = url_adapter.build(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/werkzeug/routing.py", line 2305, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'index'. Did you mean 'main.index' instead?
+2022-06-02 02:13:42,184 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:48]
+2022-06-02 02:13:43,672 ERROR: Exception on /login [GET] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
 Traceback (most recent call last):
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
     response = self.full_dispatch_request()
@@ -56,8 +50,8 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/ulrik/Git/Logger/app/routes.py", line 41, in login
-    return render_template('login.html', title='Sign In', testform=testform)
+  File "/home/ulrik/Git/Logger/app/auth/routes.py", line 24, in login
+    return render_template('auth/login.html', title='Sign In', form=form)
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/templating.py", line 148, in render_template
     return _render(
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
@@ -66,16 +60,31 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/jinja2/environment.py", line 936, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/home/ulrik/Git/Logger/app/templates/login.html", line 1, in top-level template code
-    {% extends 'base.html' %}
-  File "/home/ulrik/Git/Logger/app/templates/base.html", line 31, in top-level template code
-    {% block content %}{% endblock %}
-  File "/home/ulrik/Git/Logger/app/templates/login.html", line 6, in block 'content'
-    {{ form.hidden_tag() }}
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/jinja2/environment.py", line 485, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'form' is undefined
-2022-05-29 01:46:49,882 ERROR: Exception on /login [GET] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+  File "/home/ulrik/Git/Logger/app/templates/auth/login.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "/home/ulrik/Git/Logger/app/templates/base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block 'html'
+    {% block body -%}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block 'body'
+    {% block content -%}
+  File "/home/ulrik/Git/Logger/app/templates/base.html", line 48, in block 'content'
+    {% block app_content %}{% endblock %}
+  File "/home/ulrik/Git/Logger/app/templates/auth/login.html", line 12, in block 'app_content'
+    <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/helpers.py", line 336, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/helpers.py", line 323, in url_for
+    rv = url_adapter.build(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/werkzeug/routing.py", line 2305, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'register'. Did you mean 'auth.register' instead?
+2022-06-02 02:14:30,636 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:48]
+2022-06-02 02:14:37,539 ERROR: Exception on / [GET] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
 Traceback (most recent call last):
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
     response = self.full_dispatch_request()
@@ -85,8 +94,10 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/ulrik/Git/Logger/app/routes.py", line 41, in login
-    return render_template('login.html', title='Sign In', testform=testform)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_login/utils.py", line 303, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/home/ulrik/Git/Logger/app/main/routes.py", line 23, in index
+    return render_template('index.html', title='Home', logs=logs)
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/templating.py", line 148, in render_template
     return _render(
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
@@ -95,41 +106,25 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/jinja2/environment.py", line 936, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/home/ulrik/Git/Logger/app/templates/login.html", line 1, in top-level template code
+  File "/home/ulrik/Git/Logger/app/templates/index.html", line 1, in top-level template code
     {% extends 'base.html' %}
-  File "/home/ulrik/Git/Logger/app/templates/base.html", line 31, in top-level template code
-    {% block content %}{% endblock %}
-  File "/home/ulrik/Git/Logger/app/templates/login.html", line 6, in block 'content'
-    {{ form.hidden_tag() }}
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/jinja2/environment.py", line 485, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'form' is undefined
-2022-05-29 01:46:52,050 ERROR: Exception on /login [GET] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
-Traceback (most recent call last):
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1525, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1523, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/ulrik/Git/Logger/app/routes.py", line 41, in login
-    return render_template('login.html', title='Sign In', testform=testform)
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/templating.py", line 148, in render_template
-    return _render(
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/templating.py", line 128, in _render
-    rv = template.render(context)
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/jinja2/environment.py", line 1301, in render
-    self.environment.handle_exception()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/jinja2/environment.py", line 936, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "/home/ulrik/Git/Logger/app/templates/login.html", line 1, in top-level template code
-    {% extends 'base.html' %}
-  File "/home/ulrik/Git/Logger/app/templates/base.html", line 31, in top-level template code
-    {% block content %}{% endblock %}
-  File "/home/ulrik/Git/Logger/app/templates/login.html", line 6, in block 'content'
-    {{ form.hidden_tag() }}
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/jinja2/environment.py", line 485, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'form' is undefined
+  File "/home/ulrik/Git/Logger/app/templates/base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block 'html'
+    {% block body -%}
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 21, in block 'body'
+    {% block navbar %}
+  File "/home/ulrik/Git/Logger/app/templates/base.html", line 27, in block 'navbar'
+    <li><a href="{{ url_for('user.user', username=current_user.username) }}">Profile</a></li>
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/helpers.py", line 336, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/helpers.py", line 323, in url_for
+    rv = url_adapter.build(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/werkzeug/routing.py", line 2305, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'user.user' with values ['username']. Did you mean 'main.user' instead?
+2022-06-02 02:15:48,067 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:48]
