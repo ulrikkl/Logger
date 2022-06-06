@@ -1,0 +1,32 @@
+{% extends 'admin/control_panel.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block admin_content %}
+<h1>Categories</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for cat in cats %}
+            <tr>
+                <th scope="row">{{ cat.id }}</th>
+                <td>{{ cat.name }}</td>
+                <td> 
+                    <form action="{{ url_for('admin.del_category') }}" method="post">
+                        <input type="hidden" value="{{ cat.id }}" name="cat_to_delete">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  <h2>Add Category:</h2>
+  {{ wtf.quick_form(addCat) }}
+{% endblock %}

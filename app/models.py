@@ -1,3 +1,6 @@
+import json
+
+from sqlalchemy import JSON, Column
 from app import db, login
 from argon2 import PasswordHasher
 from flask_login import UserMixin, current_user
@@ -45,4 +48,27 @@ class UserRoles(db.Model):
         id = db.Column(db.Integer(), primary_key=True)
         user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
         role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
+
+class LogCat(db.Model):
+    __tablename__ = 'log_categories'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+    logs = db.relationship('Log', back_populates='category', lazy='dynamic')
+
+    def __repr__(self):
+         return '<Category {}>'.format(self.name)
+
+class Log(db.Model):
+    __tablename__ = 'log'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    message = db.Column(JSON)
+    category_id = db.Column(db.Integer, db.ForeignKey('log_categories.id'))
+    category = db.relationship('LogCat', back_populates='logs')
+
+    def __repr__(self):
+            return '<Log {}>'.format(self.name)
+    
+
+
 

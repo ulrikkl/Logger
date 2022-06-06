@@ -1,7 +1,7 @@
 from flask import flash, redirect, render_template, url_for, request
 from flask_login import current_user, login_required, login_user, logout_user
 from app import db
-from app.models import User, Role
+from app.models import User, Role, LogCat
 from werkzeug.urls import url_parse
 #from flask_user import roles_required
 from app.main import bp
@@ -27,10 +27,3 @@ def index():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('user/user.html', user=user)
-
-@bp.route('/control_panel')
-#@roles_required('Admin')
-def control_panel():
-    users = User.query.all()
-    roles = Role.query.all()
-    return render_template('admin/control_panel.html', title='Control Panel', users=users, roles=roles)

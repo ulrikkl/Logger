@@ -1,0 +1,63 @@
+{% extends 'admin/control_panel.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block admin_content %}
+    <h1>Form1</h1>
+    <div>
+        {{ wtf.quick_form(headerForm) }}
+        <hr style="border-top: 1px solid black;">
+        {{ wtf.quick_form(emptyForm) }}
+        <form id="newItemsForm">
+            <div id="newItemsDir">
+    
+            </div>
+        </form>
+        <hr style="border-top: 1px solid black;">
+        <form class="form" action="" method="post">
+            <div class="form-group">
+                {{ addForm.newFieldName(class="form-control") }}
+            </div>
+            <button type="button" id="addNewItemButton" class="btn btn-default">Add Field</button>
+        </form>
+        <hr style="border-top: 1px solid black;">
+        {{ wtf.quick_form(saveForm) }}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        var fieldNum = 0; 
+        $("#addNewItemButton").click(function() { 
+        var newName = document.getElementById('newFieldName').value;
+        var newInput = $("<textarea></textarea></br>") 
+            .attr("class", "form-control") 
+            .attr("id", "newField-" + fieldNum) 
+            .attr("name", "newField[]") 
+            .attr("rows", "1")
+            .attr('readonly','readonly') 
+        $("#newItemsDir").append(newInput);
+        document.getElementById("newField-" + fieldNum).value = newName
+        fieldNum++;
+        console.log(newName); 
+        });
+        $("#saveLog").click(function( event ) {
+            var data = {
+                cat: document.getElementById("category").value,
+                type: document.getElementById("type").value,
+                message: $('#newItemsForm').serializeArray()
+            };
+            $.ajax({
+                url:"/admin/form1/save",
+                method:"POST",
+                contentType: "application/json",
+                dataType : 'json',
+                data: JSON.stringify(data),
+                success:function(data)
+                { 
+                    console.log(data)
+                }
+            });
+        });
+    </script>
+{% endblock %}

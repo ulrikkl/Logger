@@ -1,0 +1,119 @@
+2022-06-04 16:16:48,150 ERROR: Exception on /admin/form1/save [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+Traceback (most recent call last):
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ulrik/Git/Logger/app/admin/routes.py", line 52, in save_log
+    message = request.args.getlist['newField[]']
+TypeError: 'method' object is not subscriptable
+2022-06-04 16:17:09,518 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:17:30,720 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:18:35,062 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:19:00,783 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:23:10,509 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:24:12,103 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:24:13,890 ERROR: Exception on /admin/form1/save [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+Traceback (most recent call last):
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ulrik/Git/Logger/app/admin/routes.py", line 46, in save_log
+    message = jsonData['message']['value']
+TypeError: list indices must be integers or slices, not str
+2022-06-04 16:24:25,043 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:38:31,440 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:39:03,237 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:39:11,655 ERROR: Exception on /admin/form1/save [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+Traceback (most recent call last):
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ulrik/Git/Logger/app/admin/routes.py", line 46, in save_log
+    message = jsonData['message']
+KeyError: 'message'
+2022-06-04 16:40:35,105 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:40:43,427 ERROR: Exception on /admin/form1/save [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+Traceback (most recent call last):
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ulrik/Git/Logger/app/admin/routes.py", line 46, in save_log
+    message = jsonData['message']
+KeyError: 'message'
+2022-06-04 16:41:53,015 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:43:59,391 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:44:23,525 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:45:31,395 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:52:26,134 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:53:44,590 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:56:39,095 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:57:23,246 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:58:10,639 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 16:58:41,797 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 17:02:41,315 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 17:03:23,548 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 17:03:44,359 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 17:18:13,649 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 17:19:43,930 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 17:20:23,548 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 17:22:58,737 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 17:23:01,813 ERROR: Exception on /admin/form1/save [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+Traceback (most recent call last):
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ulrik/Git/Logger/app/admin/routes.py", line 50, in save_log
+    logJson = json.dump(dict.fromkeys(messageList))
+TypeError: dump() missing 1 required positional argument: 'fp'
+2022-06-04 17:23:09,559 ERROR: Exception on /admin/form1/save [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+Traceback (most recent call last):
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ulrik/Git/Logger/app/admin/routes.py", line 50, in save_log
+    logJson = json.dump(dict.fromkeys(messageList))
+TypeError: dump() missing 1 required positional argument: 'fp'
+2022-06-04 17:23:12,136 ERROR: Exception on /admin/form1/save [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+Traceback (most recent call last):
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ulrik/Git/Logger/app/admin/routes.py", line 50, in save_log
+    logJson = json.dump(dict.fromkeys(messageList))
+TypeError: dump() missing 1 required positional argument: 'fp'
+2022-06-04 17:24:24,098 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]

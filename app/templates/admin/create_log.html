@@ -1,0 +1,43 @@
+{% extends 'admin/control_panel.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block admin_content %}
+    <h1>Create Log Form</h1>
+    {{ logForm.inputField }}
+    <br>
+    <button type="button" id="formGen" class="btn btn-default">Generate Form</button>
+    <div  id="divWrapper">
+
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        var divNum = 0;
+        $("#formGen").click(function() {
+            var newForm = JSON.parse(document.getElementById("inputField").value);
+            $("#divWrapper").append('<div style="border: 1px solid black;" id="div-' + divNum +'"><form id="form-' + divNum +'" class="form"></form></div><br>');
+            var fieldNum = 0;
+            for ([key, value] of Object.entries(newForm)) {
+
+                var newLabel = $("<label>"+ key +"</label>")
+                .attr("class", "control-label")
+                .attr("for", "newField-" + fieldNum)
+
+                var newInput = $("<input></input>") 
+                .attr("class", "form-control") 
+                .attr("id", "newField-" + fieldNum) 
+                .attr("name", key) 
+                .attr("rows", "1")
+
+                $('#form-'+ divNum +'').append(newLabel)
+                $('#form-'+ divNum +'').append(newInput)
+                $('#form-'+ divNum +'').append('<br>')
+
+                fieldNum++;
+            }
+            divNum++;
+        });
+    </script>
+{% endblock %}

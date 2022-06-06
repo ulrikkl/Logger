@@ -1,0 +1,29 @@
+.sidebar {
+    height: 100%;
+    padding:15px;
+    position: fixed;
+    left: 0;
+    top: 52px;
+    overflow-x: hidden;
+    width: 200px;
+    border-right: solid black;
+}
+
+.nav_text {
+    text-decoration: none;
+    color: #000000;
+    display: block;
+}
+
+.nav_header {
+    font-size: 25px;
+}
+
+.nav_link {
+    padding: 6px 8px 6px 16px;
+    font-size: 20px;
+}
+
+.nav_link:hover {
+    color: #818181;
+  }

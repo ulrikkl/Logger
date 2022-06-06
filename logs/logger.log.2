@@ -1,9 +1,13 @@
-2022-05-29 01:47:24,140 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:31]
-2022-05-29 01:48:01,232 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:31]
-2022-05-29 01:49:26,093 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:31]
-2022-05-29 01:49:47,722 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:31]
-2022-06-01 19:42:22,090 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:33]
-2022-06-01 19:42:34,897 ERROR: Exception on /login [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+2022-06-04 21:14:23,710 ERROR: Exception on /admin/list_categories [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+Traceback (most recent call last):
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1819, in _execute_context
+    self.dialect.do_execute(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: log_categories.name
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
     response = self.full_dispatch_request()
@@ -13,17 +17,64 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/ulrik/Git/Logger/app/routes.py", line 36, in login
-    login_user(user, remember=form.remember_me.data)
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_login/utils.py", line 196, in login_user
-    user_id = getattr(user, current_app.login_manager.id_attribute)()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_user/user_mixin.py", line 23, in get_id
-    user_manager = current_app.user_manager
-AttributeError: 'Flask' object has no attribute 'user_manager'
-2022-06-01 19:43:10,184 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:33]
-2022-06-01 20:02:44,083 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:33]
-2022-06-01 21:05:46,194 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:33]
-2022-06-01 21:05:49,546 ERROR: Exception on /control_panel [GET] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+  File "/home/ulrik/Git/Logger/app/admin/routes.py", line 78, in list_categories
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1435, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3367, in flush
+    self._flush(objects)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3507, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3467, in _flush
+    flush_context.execute()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    _emit_insert_statements(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/persistence.py", line 1238, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1631, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1498, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1862, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2043, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1819, in _execute_context
+    self.dialect.do_execute(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: log_categories.name
+[SQL: INSERT INTO log_categories (name) VALUES (?)]
+[parameters: ('Azure',)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+2022-06-04 21:17:04,981 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 21:17:12,688 ERROR: Exception on /admin/list_categories [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
+Traceback (most recent call last):
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1819, in _execute_context
+    self.dialect.do_execute(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: log_categories.name
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
     response = self.full_dispatch_request()
@@ -33,72 +84,55 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_user/decorators.py", line 129, in decorator
-    user_manager = current_app.user_manager
-AttributeError: 'Flask' object has no attribute 'user_manager'
-2022-06-01 21:06:21,161 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:33]
-2022-06-01 21:59:11,989 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:33]
-2022-06-02 00:56:07,933 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:36]
-2022-06-02 00:57:03,969 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:36]
-2022-06-02 00:57:23,789 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:36]
-2022-06-02 00:57:41,916 ERROR: Exception on /user/sign-in [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
-Traceback (most recent call last):
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1525, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1523, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_user/user_manager.py", line 416, in login_stub
-    return self.login_view()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_user/user_manager__views.py", line 379, in login_view
-    if request.method == 'POST' and login_form.validate():
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_user/forms.py", line 201, in validate
-    if user and user_manager.verify_password(self.password.data, user.password):
-AttributeError: 'User' object has no attribute 'password'
-2022-06-02 00:59:34,651 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:36]
-2022-06-02 00:59:40,521 ERROR: Exception on /user/sign-in [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
-Traceback (most recent call last):
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1525, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1523, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_user/user_manager.py", line 416, in login_stub
-    return self.login_view()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_user/user_manager__views.py", line 379, in login_view
-    if request.method == 'POST' and login_form.validate():
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_user/forms.py", line 201, in validate
-    if user and user_manager.verify_password(self.password.data, user.password):
-AttributeError: 'User' object has no attribute 'password'
-2022-06-02 01:00:10,243 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:36]
-2022-06-02 01:00:20,474 ERROR: Exception on /user/sign-in [POST] [in /home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py:1455]
-Traceback (most recent call last):
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 2077, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1525, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1523, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask/app.py", line 1509, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_user/user_manager.py", line 416, in login_stub
-    return self.login_view()
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_user/user_manager__views.py", line 379, in login_view
-    if request.method == 'POST' and login_form.validate():
-  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/flask_user/forms.py", line 201, in validate
-    if user and user_manager.verify_password(self.password.data, user.password):
-AttributeError: 'User' object has no attribute 'password'
-2022-06-02 01:50:31,497 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:36]
-2022-06-02 02:02:53,828 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:48]
-2022-06-02 02:06:50,336 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:48]
-2022-06-02 02:06:50,341 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:48]
-2022-06-02 02:06:50,341 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:48]
-2022-06-02 02:08:33,240 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:48]
-2022-06-02 02:09:59,740 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:48]
-2022-06-02 02:11:45,898 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:48]
+  File "/home/ulrik/Git/Logger/app/admin/routes.py", line 78, in list_categories
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1435, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3367, in flush
+    self._flush(objects)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3507, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3467, in _flush
+    flush_context.execute()
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    _emit_insert_statements(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/orm/persistence.py", line 1238, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1631, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1498, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1862, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2043, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1819, in _execute_context
+    self.dialect.do_execute(
+  File "/home/ulrik/Git/Logger/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: log_categories.name
+[SQL: INSERT INTO log_categories (name) VALUES (?)]
+[parameters: ('',)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+2022-06-04 21:19:15,675 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 21:20:17,835 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 21:21:07,053 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 21:21:21,280 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
+2022-06-04 21:21:42,852 INFO: Logger startup [in /home/ulrik/Git/Logger/app/__init__.py:58]
