@@ -18,15 +18,9 @@ class log_header(FlaskForm):
     category = SelectField("Category", validators=[DataRequired()])
     type = StringField('Type', validators=[DataRequired()])
 
-class log_empty(FlaskForm):
-    temp = HiddenField('Temp Field')
-
 class log_add_field(FlaskForm):
     newFieldName = StringField('New Field Name')
     addNewField = SubmitField('Add Field')
-
-class log_save_field(FlaskForm):
-    saveLog = SubmitField('Save Log')
 
 class log_generate(FlaskForm):
     inputField = TextAreaField('Input')

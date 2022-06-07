@@ -1,8 +1,9 @@
+from crypt import methods
 from flask import redirect, render_template, request, url_for, flash, jsonify
 from app import db
 from app.models import User, Role, LogCat, Log
 from app.admin import bp
-from app.admin.forms import log_preview, log_test, log_header, log_empty, log_add_field, log_save_field, log_generate, add_cat, del_cat
+from app.admin.forms import log_preview, log_test, log_header, log_add_field, log_generate, add_cat, del_cat
 import sys
 import json
 
@@ -29,11 +30,9 @@ def log1():
 def form1():
     headerForm = log_header()
     headerForm.category.choices = [g.name for g in LogCat.query.all()]
-    emptyForm = log_empty()
     addForm = log_add_field()
-    saveForm = log_save_field()
     return render_template('admin/form1.html', 
-        headerForm=headerForm, emptyForm=emptyForm, addForm=addForm, saveForm=saveForm)
+        headerForm=headerForm, addForm=addForm)
 
 @bp.route('/admin/form1/save', methods=['POST'])
 def save_log():
@@ -52,6 +51,13 @@ def save_log():
         logDict = dict.fromkeys(messageList)
         logJson = json.dumps(logDict)
 
+        log = Log(name=logType, message=logJson)
+        cat = LogCat.query.filter_by(name=logCat).first()
+
+        log.category_id = cat.id
+        db.session.add(log)
+        db.session.commit()
+
         print(logCat, file=sys.stderr)
         print(logType, file=sys.stderr)
         print(logJson, file=sys.stderr)
@@ -59,6 +65,20 @@ def save_log():
         flash('New log saved Successfully')
         msg = "New log saved successfully"
     return jsonify(msg)
+
+@bp.route('/admin/form1/preview', methods=['POST'])
+def preview_log():
+    if request.method == 'POST':
+        jsonData = request.get_json()
+        message = jsonData['message']
+        messageList = []
+        for x in message:
+            value = x.get('value')
+            messageList.append(value)
+
+        logDict = dict.fromkeys(messageList)
+        logJson = json.dumps(logDict)
+    return jsonify(logJson)
 
 @bp.route('/admin/create_log')
 def create_log():
@@ -76,8 +96,8 @@ def del_log():
     log = Log.query.filter_by(id=logId).first()
     db.session.delete(log)
     db.session.commit()
-    flash("Category removed successfully")
-    return redirect(url_for('admin.list_categories'))
+    flash("Log removed successfully")
+    return redirect(url_for('admin.list_logs'))
 
 @bp.route('/admin/list_categories', methods=['GET', 'POST'])
 def list_categories():

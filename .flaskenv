@@ -1,1 +1,2 @@
 FLASK_APP=logger.py
+FLASK_ENV=development

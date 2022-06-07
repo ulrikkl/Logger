@@ -1,8 +1,241 @@
 {% extends 'base.html' %}
 
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet"
+      href="{{url_for('static', filename='css/index.css')}}">
+{% endblock %}
+
 {% block app_content %}
-    <h1>Hello, {{ current_user.username }}!</h1>
-    {% for log in logs %}
-        <div><p><b>{{ log.type }}:</b> <br>{{ log.message }}</p></div>
-    {% endfor %}
+<div class="container">
+    <div class="row">
+        <div class="nav sidebar">
+            <button class="btn btn-lg btn-success" onclick="sendLogs()">Send</button>
+            <button class="btn btn-lg btn-primary" onclick="exportLogs()">Export</button>
+            <button class="btn btn-lg btn-info">Load</button>
+            <button class="btn btn-lg btn-danger" onclick="clearLogs()">Clear</button>
+            <li class="nav-divider"></li>
+            {% for cat in cats %}
+                <h1 class="nav_text nav_header"> {{ cat.name }} </h1>
+                {% for log in cat.logs %}
+                    <button title="Add log" class="btn btn-default" id="{{ log.id }}" onclick="addLog(this.id)">{{ log.name }}</button>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <div  id="divWrapper">
+            <table class="table" id="logTable">
+                <tbody>
+                    {% for log in activeLogs %}
+                        <tr>
+                            <th scope="row">
+                                <label class="control-label"> {{ log.category }} </label> 
+                                <label class="control-label"> {{ log.type }} </label> 
+                            </th>
+                            <td id="table-form-{{ log.order }}">
+                                <form onchange="saveLogMessage(this.id)" class="form-inline" id="form-{{ log.order }}" name="{{ log.order }}">
+                                    <input type="hidden" id="msg-{{ log.order }}" value="{{ log.message }}">
+                                    <div class="form-group" id="form-{{ log.order }}-group">
+    
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-default" id="{{ log.id}}" onclick="movUp(this.id)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+                                          </svg>
+                                    </button>
+                                    <button class="btn btn-default" id="{{ log.id}}" onclick="movDown(this.id)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                                          </svg>
+                                    </button>
+                                    <button class="btn btn-danger" id="{{ log.id}}" onclick="remLog(this.id)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                      </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        function addLog(logId) {
+            $.ajax({
+                url:"/index/add",
+                method:"POST",
+                data: logId,
+                success:function(data)
+                { 
+                    location.reload()
+                }
+            });
+        };
+        function remLog(logId) {
+            $.ajax({
+                url:"/index/rem",
+                method:"POST",
+                data: logId,
+                success:function(data)
+                { 
+                    location.reload()
+                }
+            });
+        };
+        function movUp(logId) {
+            $.ajax({
+                url:"/index/movup",
+                method:"POST",
+                data: logId,
+                success:function(data)
+                { 
+                    location.reload()
+                }
+            });
+        };
+        function movDown(logId) {
+            $.ajax({
+                url:"/index/movdown",
+                method:"POST",
+                data: logId,
+                success:function(data)
+                { 
+                    location.reload()
+                }
+            });
+        };
+        function clearLogs() {
+            $.ajax({
+                url:"/index/clear",
+                method:"POST",
+                success:function(data)
+                { 
+                    location.reload()
+                }
+            });
+        };
+        window.onload = function() {
+            table = document.getElementById("logTable")
+            tableLen = table.rows.length
+            i = 1
+            while (i <= tableLen) {
+                formMsg = document.getElementById("msg-" + i).value
+                if (formMsg !== "None") {
+                    msg = JSON.parse(formMsg);
+                    var fieldNum = 1;
+                    for ([key, value] of Object.entries(msg)) {
+                        var newLabel = $("<label>" + key + "</label>")
+                        .attr("class", "control-label")
+                        .attr("for", "form-" + i + "-field-" + fieldNum)
+                        .attr("style", "padding-right: 5px;")
+    
+                        var newInput = $("<input></input>") 
+                        .attr("class", "logform form-control") 
+                        .attr("id", "form-" + i + "-field-" + fieldNum) 
+                        .attr("name", key) 
+                        .attr("rows", "1")
+                        .attr("value", value)
+    
+                        $('#form-' + i + "-group").append(newLabel)
+                        $('#form-' + i + "-group").append(newInput)
+                        $('#form-' + i + "-group").append('<br>')
+    
+                        fieldNum++;
+                    };
+                }
+                
+                i++;
+
+            }
+
+        };
+        function objectifyForm(formId) {
+            var returnArray = {}
+            var test = $('#' + formId +'').serializeArray()
+
+            for (var i=0; i<test.length; i++) {
+                returnArray[test[i]["name"]] = test[i]["value"];
+
+            }
+            return JSON.stringify(returnArray)
+
+        };
+        function download(text) {
+            var date = new Date()
+            var fileName = ""+date.getFullYear() + "/" + date.getMonth()+"/"+ date.getDay() +" "+ date.getHours() +":"+ date.getMinutes() +":"+ date.getSeconds()
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent("[\n"+ text+"\n]"));
+            element.setAttribute('download', fileName + ".json");
+          
+            element.style.display = 'none';
+            document.body.appendChild(element);
+          
+            element.click();
+          
+            document.body.removeChild(element);
+        };
+        function saveLogMessage(formId) {
+            var message = objectifyForm(formId)
+            const orderId = formId.split('-')[1]
+            
+            var data = {
+                orderId: orderId,
+                message: message
+            }
+            $.ajax({
+                url:"/index/save",
+                method:"POST",
+                contentType: "application/json",
+                dataType : 'json',
+                data: JSON.stringify(data),
+                success:function(data)
+                { 
+                    location.reload()
+                }
+            });
+            
+
+        };
+        function exportLogs() {
+            var forms = document.getElementsByTagName("form")
+            formArray = []
+            for (var i=0;i<forms.length;i++) {
+                message = objectifyForm(forms[i]['id'])
+                formArray.push(message)
+            }
+            console.log(formArray)
+            download(formArray)
+            
+        }
+        function sendLogs() {
+            var forms = document.getElementsByTagName("form")
+            formArray = []
+            for (var i=0;i<forms.length;i++) {
+                message = objectifyForm(forms[i]['id'])
+                formArray.push(message)
+            }
+            data = { 
+                logs: formArray
+            }
+            $.ajax({
+                url:"/index/send",
+                method:"POST",
+                data: data,
+                success:function(data)
+                { 
+                    location.reload()
+                }
+            });
+        }
+    </script>    
 {% endblock %}

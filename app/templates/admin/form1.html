@@ -6,10 +6,9 @@
     <div>
         {{ wtf.quick_form(headerForm) }}
         <hr style="border-top: 1px solid black;">
-        {{ wtf.quick_form(emptyForm) }}
         <form id="newItemsForm">
             <div id="newItemsDir">
-    
+                <label class="control-label">New Log Fields</label>
             </div>
         </form>
         <hr style="border-top: 1px solid black;">
@@ -20,7 +19,12 @@
             <button type="button" id="addNewItemButton" class="btn btn-default">Add Field</button>
         </form>
         <hr style="border-top: 1px solid black;">
-        {{ wtf.quick_form(saveForm) }}
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" id="previewJson" class="btn btn-default">Preview JSON</button>
+            <button type="button" id="saveLog" class="btn btn-success">Save Log</button>
+        </div>
+        <hr>
+        <textarea id="previewForm"></textarea>
     </div>
 {% endblock %}
 
@@ -41,7 +45,7 @@
         fieldNum++;
         console.log(newName); 
         });
-        $("#saveLog").click(function( event ) {
+        $("#saveLog").click(function() {
             var data = {
                 cat: document.getElementById("category").value,
                 type: document.getElementById("type").value,
@@ -55,7 +59,25 @@
                 data: JSON.stringify(data),
                 success:function(data)
                 { 
-                    console.log(data)
+                    location.reload()
+                }
+            });
+        });
+        $("#previewJson").click(function() {
+            var data = {
+                cat: document.getElementById("category").value,
+                type: document.getElementById("type").value,
+                message: $('#newItemsForm').serializeArray()
+            };
+            $.ajax({
+                url:"/admin/form1/preview",
+                method:"POST",
+                contentType: "application/json",
+                dataType : 'json',
+                data: JSON.stringify(data),
+                success:function(data)
+                { 
+                    document.getElementById("previewForm").value = data
                 }
             });
         });

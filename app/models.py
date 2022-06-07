@@ -1,4 +1,5 @@
 import json
+from unicodedata import category
 
 from sqlalchemy import JSON, Column
 from app import db, login
@@ -69,6 +70,13 @@ class Log(db.Model):
     def __repr__(self):
             return '<Log {}>'.format(self.name)
     
+class ActiveLog(db.Model):
+    __tablename__ = 'active_log'
+    id = db.Column(db.Integer, primary_key=True)
+    category = db.Column(db.String(50))
+    type = db.Column(db.String(50))
+    order = db.Column(db.Integer)
+    message = db.Column(JSON)
 
-
-
+    def set_location(self, orderId):
+        self.order = orderId
