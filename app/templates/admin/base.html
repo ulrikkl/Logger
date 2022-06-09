@@ -12,16 +12,13 @@
     <div class="row">
         <div class="nav sidebar">
             <h1><a class="nav_text nav_header" href="{{ url_for('admin.control_panel') }}">Home</a></h1>
-            <h1 class="nav_text nav_header">Log Submit</h1>
-            <a class="nav_text nav_link" href="{{ url_for('admin.log1') }}">Log1</a>
-            <h1 class="nav_text nav_header">Create Log</h1>
+            <h1 class="nav_text nav_header">Tools</h1>
             <a class="nav_text nav_link" href="{{ url_for('admin.create_log') }}">Create Log</a> 
-            <li class="nav-divider"></li>
-            <h1 class="nav_text nav_header">Create Form</h1>
-            <a class="nav_text nav_link" href="{{ url_for('admin.form1') }}">Form1</a> 
+            <a class="nav_text nav_link" href="{{ url_for('admin.user_requests') }}">User Requests</a> 
             <h1 class="nav_text nav_header">List</h1>
             <a class="nav_text nav_link" href="{{ url_for('admin.list_categories') }}">Categories</a> 
             <a class="nav_text nav_link" href="{{ url_for('admin.list_logs') }}">Logs</a> 
+            <a class="nav_text nav_link" href="{{ url_for('admin.list_users') }}">Users</a> 
         </div>
         <div>
             {% block admin_content %}

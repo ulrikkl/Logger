@@ -2,42 +2,84 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block admin_content %}
-    <h1>Create Log Form</h1>
-    {{ logForm.inputField }}
-    <br>
-    <button type="button" id="formGen" class="btn btn-default">Generate Form</button>
-    <div  id="divWrapper">
-        
+    <h1>Form1</h1>
+    <div>
+        {{ wtf.quick_form(headerForm) }}
+        <hr style="border-top: 1px solid black;">
+        <form id="newItemsForm">
+            <div id="newItemsDir">
+                <label class="control-label">New Log Fields</label>
+            </div>
+        </form>
+        <hr style="border-top: 1px solid black;">
+        <form class="form" action="" method="post">
+            <div class="form-group">
+                {{ addForm.newFieldName(class="form-control") }}
+            </div>
+            <button type="button" id="addNewItemButton" class="btn btn-default">Add Field</button>
+        </form>
+        <hr style="border-top: 1px solid black;">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" id="previewJson" class="btn btn-default">Preview JSON</button>
+            <button type="button" id="saveLog" class="btn btn-success">Save Log</button>
+        </div>
+        <hr>
+        <textarea id="previewForm"></textarea>
     </div>
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
     <script>
-        var divNum = 0;
-        $("#formGen").click(function() {
-            var newForm = JSON.parse(document.getElementById("inputField").value);
-            $("#divWrapper").append('<div style="border: 1px solid black;" id="div-' + divNum +'"><form id="form-' + divNum +'" class="form"></form></div><br>');
-            var fieldNum = 0;
-            for ([key, value] of Object.entries(newForm)) {
-
-                var newLabel = $("<label>"+ key +"</label>")
-                .attr("class", "control-label")
-                .attr("for", "newField-" + fieldNum)
-
-                var newInput = $("<input></input>") 
-                .attr("class", "form-control") 
-                .attr("id", "newField-" + fieldNum) 
-                .attr("name", key) 
-                .attr("rows", "1")
-
-                $('#form-'+ divNum +'').append(newLabel)
-                $('#form-'+ divNum +'').append(newInput)
-                $('#form-'+ divNum +'').append('<br>')
-
-                fieldNum++;
-            }
-            divNum++;
+        var fieldNum = 0; 
+        $("#addNewItemButton").click(function() { 
+        var newName = document.getElementById('newFieldName').value;
+        var newInput = $("<textarea></textarea></br>") 
+            .attr("class", "form-control") 
+            .attr("id", "newField-" + fieldNum) 
+            .attr("name", "newField[]") 
+            .attr("rows", "1")
+            .attr('readonly','readonly') 
+        $("#newItemsDir").append(newInput);
+        document.getElementById("newField-" + fieldNum).value = newName
+        fieldNum++;
+        console.log(newName); 
+        });
+        $("#saveLog").click(function() {
+            var data = {
+                cat: document.getElementById("category").value,
+                type: document.getElementById("type").value,
+                message: $('#newItemsForm').serializeArray()
+            };
+            $.ajax({
+                url:"/admin/create_log/save",
+                method:"POST",
+                contentType: "application/json",
+                dataType : 'json',
+                data: JSON.stringify(data),
+                success:function(data)
+                { 
+                    location.reload()
+                }
+            });
+        });
+        $("#previewJson").click(function() {
+            var data = {
+                cat: document.getElementById("category").value,
+                type: document.getElementById("type").value,
+                message: $('#newItemsForm').serializeArray()
+            };
+            $.ajax({
+                url:"/admin/create_log/preview",
+                method:"POST",
+                contentType: "application/json",
+                dataType : 'json',
+                data: JSON.stringify(data),
+                success:function(data)
+                { 
+                    document.getElementById("previewForm").value = data
+                }
+            });
         });
     </script>
 {% endblock %}

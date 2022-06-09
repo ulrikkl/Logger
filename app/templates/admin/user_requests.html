@@ -1,0 +1,29 @@
+{% extends 'admin/control_panel.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block admin_content %}
+    <h1>User Requests</h1>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <th scope="row">{{ user.username }}</th>
+                    <td>{{ user.email }}</td>
+                    <td> 
+                        <form action="{{ url_for('admin.accept_user') }}" method="post">
+                            <input type="hidden" value="{{ user.id }}" name="user_to_accept">
+                            <input type="submit" class="btn btn-success" value="Accept">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

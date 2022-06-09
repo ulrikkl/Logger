@@ -15,26 +15,15 @@ def control_panel():
     return render_template('admin/control_panel.html', title='Control Panel', 
     cats=cats)
 
-@bp.route('/admin/log1', methods=['GET', 'POST'])
-def log1():
-    previewform = log_preview()
-    form = log_test()
-    if form.validate_on_submit():
-        #previewform.json.data = [type(field) for field in form._fields.values()]
-        data = {field.name: field.data for field in form._fields.values() if field.type not in ("SubmitField", "CSRFTokenField", "HiddenField")}
-        jsonData = json.dumps(data)
-        previewform.json.data = jsonData #{field.name: field.data for field in form._fields.values() if field.type not in ("SubmitField", "CSRFTokenField", "HiddenField")}
-    return render_template('admin/log1.html', form=form, previewform=previewform)
-
-@bp.route('/admin/form1', methods=['GET', 'POST'])
-def form1():
+@bp.route('/admin/create_log', methods=['GET', 'POST'])
+def create_log():
     headerForm = log_header()
     headerForm.category.choices = [g.name for g in LogCat.query.all()]
     addForm = log_add_field()
-    return render_template('admin/form1.html', 
+    return render_template('admin/create_log.html', 
         headerForm=headerForm, addForm=addForm)
 
-@bp.route('/admin/form1/save', methods=['POST'])
+@bp.route('/admin/create_log/save', methods=['POST'])
 def save_log():
     if request.method == 'POST':
         jsonData = request.get_json()
@@ -66,7 +55,7 @@ def save_log():
         msg = "New log saved successfully"
     return jsonify(msg)
 
-@bp.route('/admin/form1/preview', methods=['POST'])
+@bp.route('/admin/create_log/preview', methods=['POST'])
 def preview_log():
     if request.method == 'POST':
         jsonData = request.get_json()
@@ -80,10 +69,19 @@ def preview_log():
         logJson = json.dumps(logDict)
     return jsonify(logJson)
 
-@bp.route('/admin/create_log')
-def create_log():
-    logForm = log_generate()
-    return render_template('admin/create_log.html', logForm=logForm)
+@bp.route('/admin/user_requests', methods=['GET', 'POST'])
+def user_requests():
+    users = User.query.filter_by(status='Inactive').all()
+    return render_template('admin/user_requests.html', users=users)
+
+@bp.route('/admin/user_requests/accept', methods=['GET', 'POST'])
+def accept_user():
+    userId = request.form['user_to_accept']
+    user = User.query.filter_by(id=userId).first()
+    user.status = "Active"
+    db.session.commit()
+    flash("User accepted successfully")
+    return redirect(url_for('admin.user_requests'))
 
 @bp.route('/admin/list_logs')
 def list_logs():
@@ -120,3 +118,17 @@ def del_category():
     db.session.commit()
     flash("Category removed successfully")
     return redirect(url_for('admin.list_categories'))
+
+@bp.route('/admin/list_users', methods=['GET', 'POST'])
+def list_users():
+    users = User.query.order_by(User.status.asc()).all()
+    return render_template('admin/list_users.html', users=users)
+
+@bp.route('/admin/list_users/delete', methods=['GET', 'POST'])
+def del_user():
+    userId = request.form['user_to_accept']
+    user = User.query.filter_by(id=userId).first()
+    db.session.delete(user)
+    db.session.commit()
+    flash("User deleted successfully")
+    return redirect(url_for('admin.user_requests'))

@@ -29,12 +29,12 @@
                         <tr>
                             <th scope="row">
                                 <label class="control-label"> {{ log.category }} </label> 
-                                <label class="control-label"> {{ log.type }} </label> 
+                                <label id="type-{{ log.order }}" class="control-label">{{ log.type }}</label> 
                             </th>
                             <td id="table-form-{{ log.order }}">
-                                <form onchange="saveLogMessage(this.id)" class="form-inline" id="form-{{ log.order }}" name="{{ log.order }}">
+                                <form onchange="saveLogMessage(this.id)" class="form-inline" id="form-{{ log.order }}" name="{{ log.order }}" style="display: table;">
                                     <input type="hidden" id="msg-{{ log.order }}" value="{{ log.message }}">
-                                    <div class="form-group" id="form-{{ log.order }}-group">
+                                    <div class="form-group" id="form-{{ log.order }}-group" style="display: table-row;">
     
                                     </div>
                                 </form>
@@ -137,7 +137,7 @@
                         var newLabel = $("<label>" + key + "</label>")
                         .attr("class", "control-label")
                         .attr("for", "form-" + i + "-field-" + fieldNum)
-                        .attr("style", "padding-right: 5px;")
+                        .attr("style", "padding-right: 10px; text-align: right; vertical-align: middle;")
     
                         var newInput = $("<input></input>") 
                         .attr("class", "logform form-control") 
@@ -145,6 +145,7 @@
                         .attr("name", key) 
                         .attr("rows", "1")
                         .attr("value", value)
+                        .attr("style", "width: 100%;")
     
                         $('#form-' + i + "-group").append(newLabel)
                         $('#form-' + i + "-group").append(newInput)
@@ -200,7 +201,7 @@
                 data: JSON.stringify(data),
                 success:function(data)
                 { 
-                    location.reload()
+                    
                 }
             });
             
@@ -221,16 +222,24 @@
             var forms = document.getElementsByTagName("form")
             formArray = []
             for (var i=0;i<forms.length;i++) {
-                message = objectifyForm(forms[i]['id'])
-                formArray.push(message)
+                var formId = forms[i]['id']
+                var orderId = formId.split('-')[1]
+
+                var typeText = document.getElementById("type-"+ orderId).innerHTML
+                
+                message = JSON.parse(objectifyForm(formId))
+
+                var dataJson = {"type": typeText, "log": message}
+                
+                formArray.push(dataJson)
             }
-            data = { 
-                logs: formArray
-            }
+            data = {logs: formArray}
             $.ajax({
                 url:"/index/send",
                 method:"POST",
-                data: data,
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(data),
                 success:function(data)
                 { 
                     location.reload()

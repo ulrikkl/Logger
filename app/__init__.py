@@ -44,6 +44,9 @@ def create_app(config_class=Config):
     from app.admin import bp as admin_bp
     app.register_blueprint(admin_bp)
 
+    from app.setup import bp as setup_bp
+    app.register_blueprint(setup_bp)
+
     if not app.debug:
         if not os.path.exists('logs'):
             os.mkdir('logs')

@@ -1,0 +1,37 @@
+{% extends 'admin/control_panel.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block admin_content %}
+<h1>Users</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Roles</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <th scope="row">{{ user.username }}</th>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% for role in user.roles %}
+                        <input  class="btn btn-default" value="{{ role.name }}" disabled>
+                    {% endfor %}
+                </td>
+                <td>{{ user.status }}</td>
+                <td> 
+                    <form action="{{ url_for('admin.del_user') }}" method="post">
+                        <input type="hidden" value="{{ user.id }}" name="user_to_delete">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
