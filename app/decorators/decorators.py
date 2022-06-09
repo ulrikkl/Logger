@@ -7,7 +7,7 @@ def Setup_Required():
     def wrapper(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
-            if current_app.config.get('SETUP_STATUS') == "0":
+            if current_app.config.get('SETUP_STATUS') == "0" or current_app.config.get('SETUP_STATUS') == None:
                 return redirect(url_for('setup.register'))
             return f(*args, **kwargs)
         return decorated_function
