@@ -1,19 +1,19 @@
-FROM python:slim
+FROM python:3.8.10-slim
 
 RUN useradd logger
 
 
-ENV CONTAINER_HOME=/home/logger
-ADD . $CONTAINER_HOME
-WORKDIR $CONTAINER_HOME
+WORKDIR /home/logger
 
 COPY requirements.txt requirements.txt
-RUN python -m venv venv
+RUN python3 -m venv venv
+RUN python3 --version
+RUN venv/bin/pip install --upgrade pip==20.0.2
 RUN venv/bin/pip install -r requirements.txt
 
 COPY app app
 COPY migrations migrations
-COPY logger.py config.py boot.sh ./
+COPY logger.py config.py ./
 RUN chmod +x boot.sh
 
 ENV FLASK_APP logger.py

@@ -3,6 +3,7 @@ services:
     flask_app:
         container_name: flask_app
         restart: always
+        dns: 8.8.8.8
         build:
                 context: .
                 dockerfile: Dockerfile-Flask
