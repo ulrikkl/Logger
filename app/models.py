@@ -5,7 +5,6 @@ from sqlalchemy import JSON, Column
 from app import db, login
 from argon2 import PasswordHasher
 from flask_login import UserMixin, current_user
-#from flask_user import UserMixin
 from hashlib import md5
 
 class User(db.Model, UserMixin):

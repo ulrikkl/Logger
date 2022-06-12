@@ -6,18 +6,16 @@ RUN useradd logger
 WORKDIR /home/logger
 
 COPY requirements.txt requirements.txt
-RUN python3 -m venv venv
-RUN python3 --version
-RUN venv/bin/pip install --upgrade pip==20.0.2
-RUN venv/bin/pip install -r requirements.txt
+RUN pip install -r requirements.txt
+
 
 COPY app app
 COPY migrations migrations
 COPY logger.py config.py ./
-RUN chmod +x boot.sh
+RUN flask db upgrade
 
-ENV FLASK_APP logger.py
-ENV SETUP_STATUS 0
+ENV FLASK_APP=logger.py
+# ENV SETUP_STATUS=0
 
 RUN chown -R logger:logger ./
 USER logger

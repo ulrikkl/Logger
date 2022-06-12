@@ -12,14 +12,13 @@ from flask_login import current_user, login_required, login_user, logout_user
 from app import db
 from app.models import User, Role, LogCat, ActiveLog, Log
 from werkzeug.urls import url_parse
-#from flask_user import roles_required
 from app.main import bp
 from sqlalchemy import func
 from app.decorators.decorators import Setup_Required
 
 @bp.route('/')
 @bp.route('/index')
-#@Setup_Required()
+@Setup_Required()
 @login_required
 def index():
     cats = LogCat.query.all()
