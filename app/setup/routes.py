@@ -8,6 +8,7 @@ from app.models import User, Role
 from app.decorators.decorators import Setup_Done
 import signal
 import os
+import dotenv
 
 @bp.route('/setup/register', methods=['GET', 'POST'])
 @Setup_Done()
@@ -16,6 +17,8 @@ def register():
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
+        role = Role(name="Admin")
+        db.session.add(role)
         role = Role.query.filter_by(name='Admin').first()
         user.roles.append(role)
         db.session.add(user)
@@ -28,13 +31,20 @@ def register():
 @Setup_Done()
 def conf_azure():
     form = AzureConfigForm()
+    dotenv_path = "/home/logger/.env"
     if form.validate_on_submit():
-        workspaceId = form.workspaceId.data
-        sharedKey = form.sharedKey.data
-        configData = "SETUP_STATUS=1" + "\nWORKSPACE_ID="+ workspaceId + "\nSHARED_KEY=" + sharedKey
-        fo = open('.env', 'w')
-        fo.write(configData)
-        fo.close()
+        # os.environ['SETUP_STATUS'] = "1"
+        # os.environ['WORKSPACE_ID'] = form.workspaceId.data
+        # os.environ['SHARED_KEY'] = form.sharedKey.data
+        dotenv.set_key(dotenv_path, "SETUP_STATUS", "1")
+        dotenv.set_key(dotenv_path, "WORKSPACE_ID", form.workspaceId.data)
+        dotenv.set_key(dotenv_path, "SHARED_KEY", form.sharedKey.data)
+        # workspaceId = form.workspaceId.data
+        # sharedKey = form.sharedKey.data
+        # configData = "SETUP_STATUS=1" + "\nWORKSPACE_ID="+ workspaceId + "\nSHARED_KEY=" + sharedKey
+        # fo = open('.env', 'w')
+        # fo.write(configData)
+        # fo.close()
         pid = os.getpid()
         sig = signal.SIGHUP
         os.kill(pid, sig)

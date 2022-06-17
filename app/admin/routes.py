@@ -9,7 +9,6 @@ import json
 
 @bp.route('/admin/')
 @bp.route('/admin/control_panel')
-#@roles_required('Admin')
 def control_panel():
     cats = LogCat.query.all()
     return render_template('admin/control_panel.html', title='Control Panel', 
