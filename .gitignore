@@ -35,6 +35,8 @@ nosetests.xml
 .project
 .pydevproject
 
+.env
+.flaskenv
 venv
 app.db
 logger.log*
