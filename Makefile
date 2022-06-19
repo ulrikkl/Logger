@@ -13,4 +13,5 @@ stop: ## Stop docker
 	@docker-compose stop;
 
 build: ## Build docker image
+	@bash deployment/nginx/init_ssl.sh
 	@docker-compose up --build -d;

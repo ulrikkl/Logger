@@ -14,8 +14,8 @@ COPY migrations migrations
 COPY logger.py config.py ./
 RUN flask db upgrade
 
+
 ENV FLASK_APP=logger.py
-# ENV SETUP_STATUS=0
 
 RUN chown -R logger:logger ./
 USER logger
