@@ -33,18 +33,9 @@ def conf_azure():
     form = AzureConfigForm()
     dotenv_path = "/home/logger/.env"
     if form.validate_on_submit():
-        # os.environ['SETUP_STATUS'] = "1"
-        # os.environ['WORKSPACE_ID'] = form.workspaceId.data
-        # os.environ['SHARED_KEY'] = form.sharedKey.data
         dotenv.set_key(dotenv_path, "SETUP_STATUS", "1")
         dotenv.set_key(dotenv_path, "WORKSPACE_ID", form.workspaceId.data)
         dotenv.set_key(dotenv_path, "SHARED_KEY", form.sharedKey.data)
-        # workspaceId = form.workspaceId.data
-        # sharedKey = form.sharedKey.data
-        # configData = "SETUP_STATUS=1" + "\nWORKSPACE_ID="+ workspaceId + "\nSHARED_KEY=" + sharedKey
-        # fo = open('.env', 'w')
-        # fo.write(configData)
-        # fo.close()
         pid = os.getpid()
         sig = signal.SIGHUP
         os.kill(pid, sig)
